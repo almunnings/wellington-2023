@@ -1,0 +1,17 @@
+query {
+  route(path: "/") {
+    ... on RouteInternal {
+      entity {
+        ... on NodePage {
+          paragraphs {
+            ... on ParagraphText {
+              text {
+                processed
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

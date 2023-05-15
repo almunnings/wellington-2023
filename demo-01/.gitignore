@@ -1,0 +1,10 @@
+/vendor
+
+/web/*
+# Commit custom settings
+!/web/sites
+/web/sites/*
+!/web/sites/default
+/web/sites/default/*
+
+!/web/sites/default/settings.php

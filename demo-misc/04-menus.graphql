@@ -1,0 +1,9 @@
+query {
+  menu(name: MAIN) {
+    items {
+      title
+      url
+      internal
+    }
+  }
+}

@@ -1,0 +1,18 @@
+name: wellington-genql
+
+services:
+  node:
+    type: node:18
+    scanner: false
+    build:
+      - npm i -g @genql/cli
+      - npm ci
+
+tooling:
+  npm:
+    service: node
+    description: Run NPM commands within the node service.
+
+  genql:
+    service: node
+    cmd: genql --sort --endpoint "https://wellington-sample-2.lndo.site/graphql" --output ./drupal

@@ -1,0 +1,22 @@
+name: wellington-sample
+recipe: drupal10
+config:
+  webroot: web
+  build:
+    - composer install --profile
+
+tooling:
+  drush:
+    cmd: /bin/sh -c "drush --root=$LANDO_WEBROOT --uri=https://$LANDO_APP_NAME.lndo.site $@" "$0"
+
+events:
+  post-start:
+    # Wait for database then install Drupal from config.
+    - appserver: >
+        until drush sql:query ';'>/dev/null 2>&1; do
+          echo "Waiting for database..."; sleep 1;
+        done
+
+        if ! drush status --field=bootstrap | grep -qi "successful"; then
+          drush si --existing-config --account-name=admin -y;
+        fi

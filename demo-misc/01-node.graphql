@@ -1,0 +1,24 @@
+query {
+  nodePage(id: "b45f2ac4-2c75-4b49-8e75-64044c8f9021") {
+    id
+    title
+    body
+  }
+}
+
+query {
+  nodePage(id: "b45f2ac4-2c75-4b49-8e75-64044c8f9021") {
+    id
+    title
+    body {
+      processed
+    }
+    headerImage {
+      ... on MediaImage {
+        mediaImage {
+          url
+        }
+      }
+    }
+  }
+}

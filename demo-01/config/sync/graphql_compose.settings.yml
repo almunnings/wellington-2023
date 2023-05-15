@@ -1,0 +1,101 @@
+_core:
+  default_config_hash: UUIwv478j8AtmCC-S4c5LLZQlyt2IsOPJ7vYrZ1Gu8w
+entities: {  }
+node:
+  article:
+    enabled: false
+    query_load_enabled: false
+  page:
+    enabled: false
+    query_load_enabled: false
+field_config:
+  node:
+    article:
+      body:
+        enabled: false
+        name_sdl: null
+      comment:
+        enabled: false
+        name_sdl: null
+      field_image:
+        enabled: false
+        name_sdl: null
+      field_tags:
+        enabled: false
+        name_sdl: null
+    page:
+      body:
+        enabled: false
+        name_sdl: null
+      field_header_image:
+        enabled: false
+        name_sdl: null
+  media:
+    audio:
+      field_media_audio_file:
+        enabled: false
+        name_sdl: null
+    document:
+      field_media_document:
+        enabled: false
+        name_sdl: null
+    image:
+      field_media_image:
+        enabled: false
+        name_sdl: image
+    remote_video:
+      field_media_oembed_video:
+        enabled: false
+        name_sdl: null
+    video:
+      field_media_video_file:
+        enabled: false
+        name_sdl: null
+menu:
+  admin:
+    enabled: false
+    menu_route_enabled: false
+  footer:
+    enabled: false
+    menu_route_enabled: false
+  main:
+    enabled: true
+    menu_route_enabled: false
+  tools:
+    enabled: false
+    menu_route_enabled: false
+  account:
+    enabled: false
+    menu_route_enabled: false
+taxonomy_term:
+  tags:
+    enabled: false
+    query_load_enabled: false
+media:
+  audio:
+    enabled: false
+    query_load_enabled: false
+  document:
+    enabled: false
+    query_load_enabled: false
+  image:
+    enabled: false
+    query_load_enabled: false
+  remote_video:
+    enabled: false
+    query_load_enabled: false
+  video:
+    enabled: false
+    query_load_enabled: false
+paragraph: {  }
+image_style:
+  large:
+    enabled: true
+  media_library:
+    enabled: false
+  medium:
+    enabled: true
+  thumbnail:
+    enabled: true
+  wide:
+    enabled: true

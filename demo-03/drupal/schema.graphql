@@ -1,0 +1,435 @@
+"""Complex address data."""
+type Address {
+  additionalName: String
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  country: AddressCountry
+  dependentLocality: String
+  familyName: String
+  givenName: String
+  langcode: String
+  locality: String
+  organization: String
+  postalCode: String
+  sortingCode: String
+}
+
+"""Address country."""
+type AddressCountry {
+  code: String
+  name: String
+}
+
+"""Untyped attribute data. Eg configuration, settings."""
+scalar Attributes
+
+"""A Date range has a start and an end."""
+type DateRange {
+  end: DateTime
+  start: DateTime
+}
+
+"""A DateTime object."""
+type DateTime {
+  offset: UtcOffset!
+  time: Time!
+  timestamp: Timestamp!
+  timezone: TimeZone!
+}
+
+"""An email address."""
+scalar Email
+
+"""A file object to represent an managed file."""
+type File {
+  description: String
+  mime: String
+  name: String
+  size: Int!
+  url: String!
+}
+
+"""
+An HTML string
+
+Content of this type is deemed safe by the server for raw output given the
+origin and the context of its usage. The HTML can still contain scripts or style
+tags where the creating user had permission to input these.
+"""
+scalar Html
+
+"""A image object to represent an managed file."""
+type Image {
+  alt: String
+  height: Int!
+  mime: String
+  title: String
+  url: String!
+  width: Int!
+}
+
+"""Generic untyped input for key-value pairs."""
+input KeyValueInput {
+  key: String!
+  value: String
+}
+
+"""A language definition provided by the CMS."""
+type Language {
+  direction: String
+  id: ID
+  name: String
+}
+
+type Link {
+  internal: Boolean!
+  title: String
+  url: String
+}
+
+"""Use local images for reusable media."""
+type MediaImage implements MediaInterface & Node {
+  """The time the media item was last edited."""
+  changed: DateTime!
+
+  """The time the media item was created."""
+  created: DateTime!
+
+  """UUID"""
+  id: ID!
+
+  """Image"""
+  image: Image!
+
+  """Name"""
+  name: String!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""Entity type media."""
+interface MediaInterface {
+  """The time the media item was last edited."""
+  changed: DateTime
+
+  """The time the media item was created."""
+  created: DateTime
+
+  """UUID"""
+  id: ID
+
+  """Name"""
+  name: String!
+
+  """Published"""
+  status: Boolean
+}
+
+union MediaUnion = MediaImage
+
+"""A GraphQL mutation is a request that changes data on the server."""
+type Mutation {
+  """Dummy value to enable mutation extension."""
+  _: Boolean
+}
+
+"""
+A concrete fetchable type that is addressable by an id. Not to be confused with a Drupal node.
+"""
+interface Node {
+  id: ID!
+}
+
+"""Entity type node."""
+interface NodeInterface {
+  """The time that the node was last edited."""
+  changed: DateTime
+
+  """The time that the node was created."""
+  created: DateTime
+
+  """UUID"""
+  id: ID
+
+  """Language"""
+  langcode: Language
+
+  """URL alias"""
+  path: String
+
+  """Promoted to front page"""
+  promote: Boolean
+
+  """Published"""
+  status: Boolean
+
+  """Sticky at top of lists"""
+  sticky: Boolean
+
+  """Title"""
+  title: String!
+}
+
+"""
+Use <em>basic pages</em> for your static content, such as an 'About us' page.
+"""
+type NodePage implements Node & NodeInterface {
+  """Body"""
+  body: TextSummary
+
+  """The time that the node was last edited."""
+  changed: DateTime!
+
+  """Content"""
+  content: [ParagraphUnion!]
+
+  """The time that the node was created."""
+  created: DateTime!
+
+  """Header Image"""
+  headerImage: MediaUnion
+
+  """UUID"""
+  id: ID!
+
+  """Language"""
+  langcode: Language!
+
+  """URL alias"""
+  path: String!
+
+  """Promoted to front page"""
+  promote: Boolean!
+
+  """Published"""
+  status: Boolean!
+
+  """Sticky at top of lists"""
+  sticky: Boolean!
+
+  """Title"""
+  title: String!
+}
+
+union NodeUnion = NodePage
+
+"""An Image."""
+type ParagraphImage implements Node & ParagraphInterface {
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """UUID"""
+  id: ID!
+
+  """Image"""
+  image: Image
+}
+
+"""Entity type paragraph."""
+interface ParagraphInterface {
+  """The time that the Paragraph was created."""
+  created: DateTime
+
+  """UUID"""
+  id: ID
+}
+
+"""Some WYSIWYG text."""
+type ParagraphText implements Node & ParagraphInterface {
+  """Content"""
+  content: Text
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """UUID"""
+  id: ID!
+}
+
+union ParagraphUnion = ParagraphImage | ParagraphText
+
+"""A field whose value conforms to the standard E.164"""
+scalar PhoneNumber
+
+"""
+The schema's entry-point for queries.
+
+This acts as the public, top-level API from which all queries must start.
+"""
+type Query {
+  """Schema generator version."""
+  info: SchemaInformation!
+
+  """Load a Route by path."""
+  route(
+    """
+    Optionally filter the route by language. Eg en, ja, fr. Defaults to site default language.
+    """
+    langcode: String = "en"
+
+    """Internal path to load. Eg /about"""
+    path: String!
+  ): RouteUnion
+}
+
+"""The base GraphQL Response class."""
+interface Response {
+  errors: [Violation]
+}
+
+"""Routes represent incoming requests that resolve to content."""
+interface Route {
+  """Whether this route is internal or external."""
+  internal: Boolean!
+
+  """URL of this route."""
+  url: String!
+}
+
+"""A list of possible entities that can be returned by URL."""
+union RouteEntityUnion = NodePage
+
+"""Route outside of this website."""
+type RouteExternal implements Route {
+  """Whether this route is internal or external."""
+  internal: Boolean!
+
+  """URL of this route."""
+  url: String!
+}
+
+"""Route within this website."""
+type RouteInternal implements Route {
+  """Breadcrumb links for this route."""
+  breadcrumbs: [Link!]
+
+  """Content assigned to this route."""
+  entity: RouteEntityUnion
+
+  """Whether this route is internal or external."""
+  internal: Boolean!
+
+  """URL of this route."""
+  url: String!
+}
+
+"""Redirect to another URL with status."""
+type RouteRedirect implements Route {
+  """Whether this route is internal or external."""
+  internal: Boolean!
+
+  """Utility prop. Always true for redirects."""
+  redirect: Boolean!
+
+  """Suggested status for redirect. Eg 301."""
+  status: Int!
+
+  """URL of this route."""
+  url: String!
+}
+
+"""Route types that can exist in the system."""
+union RouteUnion = RouteExternal | RouteInternal | RouteRedirect
+
+"""Schema generator version."""
+type SchemaInformation {
+  """Schema description."""
+  description: String!
+
+  """Path to the homepage."""
+  home: String
+
+  """Schema module version."""
+  version: String!
+}
+
+"""List of menus available to load."""
+enum SortDirection {
+  """Ascending"""
+  ASC
+
+  """Descending"""
+  DESC
+}
+
+type Table {
+  caption: String
+
+  """A text format associated with the row data."""
+  format: String
+  rows: [TableRow]
+}
+
+type TableRow {
+  data: [String]
+  weight: Int
+}
+
+"""Entity type taxonomy_term."""
+interface TermInterface {
+  """The time that the term was last edited."""
+  changed: DateTime
+
+  """Description"""
+  description: Text
+
+  """The term UUID."""
+  id: ID
+
+  """The term language code."""
+  langcode: Language
+
+  """Name"""
+  name: String!
+
+  """URL alias"""
+  path: String
+
+  """Published"""
+  status: Boolean
+}
+
+"""A processed text format defined by the CMS."""
+type Text {
+  format: String
+  processed: Html
+  value: String
+}
+
+"""A processed text format with summary defined by the CMS."""
+type TextSummary {
+  format: String
+  processed: Html
+  summary: Html
+  value: String
+}
+
+"""RFC 3339 compliant time string."""
+scalar Time
+
+"""A field whose value exists in the standard IANA Time Zone Database."""
+scalar TimeZone
+
+"""
+Type represents date and time as number of milliseconds from start of the UNIX epoch.
+"""
+scalar Timestamp
+
+"""
+Unsupported entity or field type in the schema.
+This entity may not have been enabled in the schema yet and is being referenced via entity reference.
+"""
+type UnsupportedType {
+  """Unsupported type, always TRUE."""
+  unsupported: Boolean
+}
+
+"""A string that will have a value of format ±hh:mm"""
+scalar UtcOffset
+
+"""
+A violation indicates an error in the GraphQL query or other incorrect circumstances such as missing permissions.
+"""
+scalar Violation

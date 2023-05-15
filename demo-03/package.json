@@ -1,0 +1,16 @@
+{
+  "name": "tiny-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "full": "npx ts-node -T index.ts",
+    "demo": "npx ts-node -T demo.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
