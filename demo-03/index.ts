@@ -4,6 +4,8 @@ import {
   NodePageGenqlSelection,
   createClient,
   isNodePage,
+  isParagraphImage,
+  isParagraphInterface,
   isRouteInternal,
 } from "./drupal";
 
@@ -26,6 +28,19 @@ async function app() {
             body: {
               processed: true,
             },
+            content: {
+              __typename: true,
+              on_ParagraphImage: {
+                image: {
+                  url: true,
+                },
+              },
+              on_ParagraphText: {
+                content: {
+                  processed: true,
+                },
+              },
+            },
           },
         },
       },
@@ -33,7 +48,14 @@ async function app() {
   });
 
   if (isRouteInternal(route) && isNodePage(route.entity)) {
-    console.log(route.entity.body?.processed);
+    console.dir(route, { depth: null });
+
+    // Yay types
+    route.entity.content?.forEach((paragraph) => {
+      if (isParagraphImage(paragraph)) {
+        console.log(paragraph.image.url);
+      }
+    });
   }
 }
 

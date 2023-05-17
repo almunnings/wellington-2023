@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3c015d27ebde0277b109fd2575a967b",
+    "content-hash": "233fe4ea37cbd93a9e8697633726509b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1634,11 +1634,17 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "dev-2.0.x",
+            "version": "2.0.0-beta6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "138325848d4059b4cdb57df3bf10d5eeb94be84a"
+                "reference": "2.0.0-beta6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.0.0-beta6.zip",
+                "reference": "2.0.0-beta6",
+                "shasum": "d9c99bf54a638400588f3be7cca8f9a52f0cad3e"
             },
             "require": {
                 "drupal/core": "^10",
@@ -1664,12 +1670,9 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-2.0.x": "2.0.x-dev"
-                },
                 "drupal": {
-                    "version": "2.0.0-beta5+35-dev",
-                    "datestamp": "1684105735",
+                    "version": "2.0.0-beta6",
+                    "datestamp": "1684287834",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -10624,7 +10627,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/graphql_compose": 20
+        "drupal/graphql_compose": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
